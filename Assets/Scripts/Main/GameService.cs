@@ -1,3 +1,4 @@
+using ServiceLocator.Events;
 using ServiceLocator.Map;
 using ServiceLocator.Player;
 using ServiceLocator.Sound;
@@ -14,6 +15,7 @@ public class GameService : GenericMonoSingleton<GameService>
     public SoundService sound_service { get; private set; }
     public MapService map_service { get; private set; }
     public WaveService wave_service { get; private set; }
+    public EventService event_service { get; private set; }
 
     [SerializeField] private UIService uiService;
     public UIService UIService => uiService;
@@ -27,6 +29,8 @@ public class GameService : GenericMonoSingleton<GameService>
 
     private void Start()
     {
+        event_service = new EventService();
+        UIService.SubscribeToEvents();
         player_service = new PlayerService(playerScriptableObject);
         wave_service = new WaveService(waveScriptableObject);
         sound_service = new SoundService(soundScriptableObject, audioEffects, backgroundMusic);
