@@ -11,17 +11,18 @@ using UnityEngine.SocialPlatforms.GameCenter;
 
 namespace ServiceLocator.Wave
 {
-    public class WaveService : GenericMonoSingleton<WaveService>
+    public class WaveService
     {
-        [SerializeField] private WaveScriptableObject waveScriptableObject;
+        private WaveScriptableObject waveScriptableObject;
         private BloonPool bloonPool;
 
         private int currentWaveId;
         private List<WaveData> waveDatas;
         private List<BloonController> activeBloons;
 
-        private void Start()
+        public WaveService(WaveScriptableObject waveScriptableObject)
         {
+            this.waveScriptableObject = waveScriptableObject;
             bloonPool = new BloonPool(waveScriptableObject);
             activeBloons = new List<BloonController>();
             SubscribeToEvents();
