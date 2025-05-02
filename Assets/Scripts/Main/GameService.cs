@@ -1,5 +1,6 @@
 using ServiceLocator.Player;
 using ServiceLocator.Sound;
+using ServiceLocator.UI;
 using ServiceLocator.Utilities;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,9 @@ public class GameService : GenericMonoSingleton<GameService>
 {
     public PlayerService player_service { get; private set; }
     public SoundService sound_service { get; private set; }
+
+    [SerializeField] private UIService uiService;
+    public UIService UIService => uiService;
 
     [SerializeField] public PlayerScriptableObject playerScriptableObject;
     [SerializeField] public SoundScriptableObject soundScriptableObject;
