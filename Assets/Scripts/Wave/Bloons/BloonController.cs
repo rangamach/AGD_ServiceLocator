@@ -60,7 +60,7 @@ namespace ServiceLocator.Wave.Bloon
             if (currentHealth <= 0 && currentState == BloonState.ACTIVE)
             {
                 PopBloon();
-                SoundService.Instance.PlaySoundEffects(Sound.SoundType.BloonPop);
+                GameService.Instance.sound_service.PlaySoundEffects(Sound.SoundType.BloonPop);
             }
         }
 
