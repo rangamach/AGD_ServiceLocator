@@ -6,7 +6,7 @@ using ServiceLocator.Sound;
 
 namespace ServiceLocator.Player
 {
-    public class MonkeyController
+    public class MonkeyController : MonoBehaviour
     {
         private MonkeyView monkeyView;
         private MonkeyScriptableObject monkeyScriptableObject;
