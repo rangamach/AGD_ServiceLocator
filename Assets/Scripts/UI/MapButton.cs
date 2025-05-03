@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using ServiceLocator.Main;
+using ServiceLocator.Events;
 
 namespace ServiceLocator.UI
 {
@@ -8,9 +9,18 @@ namespace ServiceLocator.UI
     {
         [SerializeField] private int MapId;
 
-        private void Start() => GetComponent<Button>().onClick.AddListener(OnMapButtonClicked);
+        private EventService event_service;
+
+        //private void Start() => GetComponent<Button>().onClick.AddListener(OnMapButtonClicked);
+
+        public void Init(EventService event_service)
+        {
+            this.event_service = event_service;
+
+            GetComponent<Button>().onClick.AddListener(OnMapButtonClicked);
+        }
 
         // To Learn more about Events and Observer Pattern, check out the course list here: https://outscal.com/courses
-        private void OnMapButtonClicked() =>  GameService.Instance.EventService.OnMapSelected.InvokeEvent(MapId);
+        private void OnMapButtonClicked() =>  event_service.OnMapSelected.InvokeEvent(MapId);
     }
 }

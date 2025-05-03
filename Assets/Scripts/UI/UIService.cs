@@ -6,6 +6,7 @@ using ServiceLocator.Main;
 using UnityEngine.SceneManagement;
 using ServiceLocator.Events;
 using ServiceLocator.Wave;
+using ServiceLocator.Player;
 
 namespace ServiceLocator.UI
 {
@@ -21,7 +22,8 @@ namespace ServiceLocator.UI
 
         [Header("Level Selection Panel")]
         [SerializeField] private GameObject levelSelectionPanel;
-        [SerializeField] private Button Map1Button;
+        [SerializeField] private List<MapButton> mapButtons;
+        //[SerializeField] private Button Map1Button;
 
         [Header("Monkey Selection UI")]
         private MonkeySelectionUIController monkeySelectionController;
@@ -38,11 +40,18 @@ namespace ServiceLocator.UI
 
         private EventService event_service;
         private WaveService wave_service;
+        private PlayerService player_service;
 
-
-        private void Start()
+        public void Init(EventService event_service, WaveService wave_service,PlayerService player_service)
         {
-            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects);
+            this.event_service = event_service;
+            this.wave_service = wave_service;
+            this.player_service = player_service;
+
+            InitializeMapSelectionUI(event_service);
+            SubscribeToEvents();
+
+            monkeySelectionController = new MonkeySelectionUIController(cellContainer, monkeyCellPrefab, monkeyCellScriptableObjects, player_service);
             MonkeySelectionPanel.SetActive(false);
             monkeySelectionController.SetActive(false);
 
@@ -53,14 +62,6 @@ namespace ServiceLocator.UI
             nextWaveButton.onClick.AddListener(OnNextWaveButton);
             quitButton.onClick.AddListener(OnQuitButtonClicked);
             playAgainButton.onClick.AddListener(OnPlayAgainButtonClicked);
-        }
-
-        public void Init(EventService event_service, WaveService wave_service)
-        {
-            this.event_service = event_service;
-            this.wave_service = wave_service;
-
-            SubscribeToEvents();
         }
 
         public void SubscribeToEvents() => event_service.OnMapSelected.AddListener(OnMapSelected);
@@ -102,6 +103,13 @@ namespace ServiceLocator.UI
                 gameEndText.SetText("You Won");
             else
                 gameEndText.SetText("Game Over");
+        }
+
+        private void InitializeMapSelectionUI(EventService event_service)
+        {
+            levelSelectionPanel.SetActive(true);
+            foreach (MapButton mb in mapButtons)
+                mb.Init(event_service);
         }
 
     }
