@@ -7,7 +7,6 @@ using ServiceLocator.Events;
 using ServiceLocator.UI;
 using ServiceLocator.Map;
 using ServiceLocator.Sound;
-using UnityEngine.SocialPlatforms.GameCenter;
 
 namespace ServiceLocator.Wave
 {
